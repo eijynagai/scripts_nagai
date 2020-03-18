@@ -6,5 +6,5 @@
 while read var1 var2
 do
     echo Downloading $var1 $var2
-        prefetch --max-size 100G $var2 --output-directory .
+        prefetch --max-size 100G $var2 && fastq-dump --split-files $var2
 done < "$input"
