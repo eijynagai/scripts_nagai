@@ -12,12 +12,14 @@
 
 ## modify below
 #$ -l os7                     #run only os7
-#$ -l s_vmem=8G
-#$ -l mem_req=8G
-#$ -l <resource>              #opt: ljob,lmem,mjob check qfree
+#$ -l s_vmem=8G               #virtual memory required
+#$ -l mem_req=8G              #expected memory required; put same as s_vem
+#$ -l <resource>              #opt: ljob,lmem,mjob; check using qfree
 #$ -e <path>                  #saves the execution result, std error
 #$ -o <path>                  #saves the execution result, std out
-#$ -N <job name> 
+#$ -N <job name>              #include name in the; check qstat
+
+#cd <dir>                     #working directory
 
 echo "Hello world"
 
