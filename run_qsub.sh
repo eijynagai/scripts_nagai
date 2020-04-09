@@ -29,16 +29,16 @@ source activate science
 
 #cd <dir>                     #working directory
 
-echo "Hello world"
+time echo "Hello world"
 
 
 ### Duration information
-##echo "START: " `date  "+%Y%m%d-%H%M%S"`
+echo "START: " `date  "+%Y.%m.%d-%H:%M:%S"`
 echo "DONE: " `date  "+%Y.%m.%d-%H:%M:%S"`
-start_time=`date +%S`
-end_time=`date +%S`
-duration=$((end_time - start_time))
-echo "TIME: " $duration
+#start_time=`date +%S`
+#end_time=`date +%S`
+#duration=$((end_time - start_time))
+#echo "TIME: " $duration
 
 
 exit;
