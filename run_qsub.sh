@@ -26,8 +26,8 @@
 load module python/3.6
 source activate science
 
-
-#cd <dir>                     #working directory
+#working directory
+#cd <dir>
 
 time echo "Hello world"
 
