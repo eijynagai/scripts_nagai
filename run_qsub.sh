@@ -21,6 +21,9 @@
 #$ -N <job name>              #include name in the; check qstat
 
 
+#reset timer
+SECONDS=0
+
 # load conda environment
 #load module python3
 load module python/3.6
@@ -29,16 +32,12 @@ source activate science
 #working directory
 #cd <dir>
 
+#your script here
 time echo "Hello world"
-
 
 ### Duration information
 echo "START: " `date  "+%Y.%m.%d-%H:%M:%S"`
 echo "DONE: " `date  "+%Y.%m.%d-%H:%M:%S"`
-#start_time=`date +%S`
-#end_time=`date +%S`
-#duration=$((end_time - start_time))
-#echo "TIME: " $duration
-
+echo "DURATION: $(($SECONDS / 3600))hrs $((($SECONDS / 60) % 60))min $(($SECONDS % 60))sec"
 
 exit;
