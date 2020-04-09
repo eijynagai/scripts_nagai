@@ -1,11 +1,11 @@
 #!/bin/env sh
 #$ -S /bin/sh
 #$ -cwd                       #job is located in the current wd
-#$ -jy                        #merges the contents of standard error with ouput
+#$ -j y                        #merges the contents of standard error with ouput
 ##$ -hold_jid <job_id>        #holds the jov until job_id ends
 #$ -R y                       #reserve resources until have enough to start
 #$ -v LD_LIBRARY_PATH="",PATH=$PATH      #export these environmental variables
-#S -V                         #necessary to run conda modules
+#$ -V                         #necessary to run conda modules
 ##$ -masterl <resource>       #use this or l
 ##$ -pe <name>                #parallel env name, use "def_slot 4"
 ##$ -M <your_email>
@@ -25,19 +25,22 @@
 SECONDS=0
 
 # load conda environment
-#load module python3
-load module python/3.6
+#module load python3
+module load python/3.6
 source activate science
 
-#working directory
-#cd <dir>
+    #working directory
+    #cd <dir>
 
-#your script here
-time echo "Hello world"
+    #your script here
+    echo "Hello world"
 
-### Duration information
-echo "START: " `date  "+%Y.%m.%d-%H:%M:%S"`
-echo "DONE: " `date  "+%Y.%m.%d-%H:%M:%S"`
-echo "DURATION: $(($SECONDS / 3600))hrs $((($SECONDS / 60) % 60))min $(($SECONDS % 60))sec"
+    ### Duration information
+    echo "START: " `date  "+%Y.%m.%d-%H:%M:%S"`
+    echo "DONE: " `date  "+%Y.%m.%d-%H:%M:%S"`
+    echo "DURATION: $(($SECONDS / 3600))hrs $((($SECONDS / 60) % 60))min $(($SECONDS % 60))sec"
+
+# deactivate the environment
+conda deactivate
 
 exit;
