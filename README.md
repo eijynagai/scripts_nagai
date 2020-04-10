@@ -11,11 +11,15 @@ Please follow the steps below to run the scripts under the Univa Grid Engine (UG
 ## How to use supercomputer SHIROKANE
 
 To submit any command:
-```qsub [ShellScript]```
+```
+qsub [ShellScript]
+```
 
 
 To confirm the execution of your submission:
-```qstat```
+```
+qstat
+```
 
 To delete any job in the queue or running:
 ```
@@ -23,4 +27,17 @@ qdel [jobID]
 qdel -u [userName] #will delete all jobs of the user
 ```
 
-Refer to the file `run_qsub.sh` for the most common parameters used in our system.
+## Parameters
+
+```
+#!/bin/env sh
+#$ -S /bin/sh
+#$ -cwd                       #job is located in the current wd
+#$ -j y                        #merges the contents of standard error with ouput
+#$ -l s_vmem=8G               #virtual memory required
+#$ -l mem_req=8G              #expected memory required; put same as s_vem
+#$ -e <path>                  #saves the execution result, std error
+#$ -o <path>                  #saves the execution result, std out
+```
+
+Refer to the file `run_qsub.sh` for a example of bash file to submit. This file includes more details of useful parameters.
