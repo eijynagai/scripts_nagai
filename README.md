@@ -15,6 +15,10 @@ To submit any command:
 qsub [ShellScript]
 ```
 
+To check which service is available
+```
+qfree
+```
 
 To confirm the execution of your submission:
 ```
