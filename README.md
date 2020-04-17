@@ -2,6 +2,7 @@
 
 Bioinformatics scrips for Next Generation Sequencing data. Collections of useful scripts collected and created by me. Feel free to copy, modidy or contribute.
 
+
 ## Note 
 
 The scripts here are writen to run in SHIROKANE supercomputer system at Human Genome Center, University of Tokyo.
@@ -45,3 +46,10 @@ qdel -u [userName] #will delete all jobs of the user
 ```
 
 Refer to the file `run_qsub.sh` for a example of bash file to submit. This file includes more details of useful parameters.
+
+
+## Extra
+
+Interesting links to learn about bioinformatics.
+
+* [Rosalind, a platform for learning bioinformatics through problem solving exercises.](http://rosalind.info/about/)
