@@ -11,6 +11,14 @@ Output:     various
 Last modification: 20200417: initial commit
 """
 
-# function for counting nucleotides from a sequence
+# counting nucleotides from a DNA sequence
 def atcg(s):
     return s.count('A'), s.count('T'), s.count('C'), s.count('G')
+
+# transcribing DNA to RNA
+def dna2rna(t):
+    # replace T to U
+    return t.replace('T','U')
+
+seq='GATGGAACTTGACTACGTAAATT'
+print(dna2rna(seq))
