@@ -28,13 +28,29 @@ def revcomp(seq):
     return "".join(complement[base] for base in seq)[::-1]
 
 
+# computing GC content of a DNA FASTA file
+def gc_content(seq):
+    total=len(seq)
+    return (seq.count('G')+seq.count('C'))/total*100
+
 
 def main():
     # runing tests on the functions
-    seq='AAAACCCGGT'
-    print(revcomp(seq))
+    seq='CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT'
+    print(gc_content(seq))
 
 
+    #input fasta file
+
+    #break into ID and sequence
+
+    #calculate gc content
+
+    #add in bigger gc if bigger_gc == ''
+
+    #elif new_gc > bigger_gc, replace it
+
+    #print bigger_gc
 
 if __name__ == '__main__':
     main()
