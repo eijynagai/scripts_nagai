@@ -1,0 +1,15 @@
+## Useful functions
+
+# to round numbers
+func round(n){
+    n = n + 0.5
+    n = int(n)
+    return(n)
+}
+
+##############
+# To run this command we use
+# awk -f awk_func.txt <file>
+##############
+
+/^w/ && $2>100 {print $, round($2)}
