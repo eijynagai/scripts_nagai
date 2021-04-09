@@ -1,0 +1,32 @@
+# Muscle and Mesoderm
+markers1 <- c("hlh-1","myo-3","egl-20","cwn-1","ceh-13","ceh-34","eya-1","cup-4","lgc-26","let-381","unc-30","sfrp-1","hlh-8","glb-26","dmd-4","pal-1","mls-1","dsc-1","exp-1","mig-1","unc-62","ehn-3","unc-39")
+
+#Pharynx
+markers2 <- c("hlh-6","phat-2","phat-5","lys-8","phat-1","ceh-6","irx-1","dmd-4","gly-15","ttx-1","pax-1","agr-1","ceh-45","ceh-2","lec-8","cwn-2","unc-62","fos-1","tnc-2","tnt-4","tni-4","inx-20","eyg-1","ceh-22","ser-2","elt-4","W05B10.4","spp-7","ref-1","aff-1","unc-129","inx-12","let-23","mlt-11","mlt-8","slt-1","nhr-25","nhr-67","ceh-19","nhr-239","glr-8")
+
+# Intestine
+markers3 <- c("ZC204.12","cpr-1","ceh-37","irg-7","pal-1","faah-1","pbo-4","psa-3")
+
+# Hypodermis and seam cells
+markers4 <- c("elt-1","elt-3","slt-1","vab-3","unc-130","egl-17","ceh-32","unc-62","tbx-2","ceh-13","tbx-8","tbx-9","lin-39","lin-44","vab-7","pax-3","plx-2","mab-5","bus-4","bus-8","bus-12","ceh-16","rnt-1","elt-6","lin-12","ahr-1")
+
+# Glia and excretory cells
+markers5 <- c("aff-1","kcc-3","nas-31","pros-1","F52E1.2","F16F9.3","unc-62","aqp-7","K09F5.6","mltn-13","K08D12.4","grd-15","grl-12","mls-2","inx-12","inx-13","grl-18","wrt-6","nhr-25","ceh-32","slt-1","sym-1","ceh-37","ceh-6","hlh-11","lim-6","ser-2","aat-1","irx-1","grl-2","let-23","eak-3","sdf-9","eak-6","mlt-8","qua-1","F52A8.3","F52G3.5","ZK662.2","Y47D3B.6")
+
+# Early embryo,germline,and rectum
+markers6 <- c("glh-1","pgl-1","nos-1")
+
+# Ciliated neurons
+markers7 <- c("ceh-19","cat-4","bas-1","K04D7.6","xbx-9","F15A4.5","gcy-8","gcy-18","gcy-23","dac-1","ttx-1","che-1","ceh-36A","gcy-6","gcy-14","lim-6","gcy-5","gcy-22","gcy-11","capa-1","osm-10","R102.2","deg-1","M04B2.6","unc-42","ins-6","cng-2","ssu-1","trx-1","nhr-6","sptf-1","F09E8.8","pax-2","C47D2.1","odr-7","nhr-216","ocr-1","srd-23","odr-1","daf-11","sox-2","ceh-36","dat-1","cat-2","tba-9","pdf-1","unc-62","cwn-2","ceh-13","nhr-67","gcy-32","gcy-35","gcy-36","gcy-37","gcy-9","gcy-31","gcy-33","flp-3","agr-1","tba-6","klp-6","cil-7","tbx-2","ocr-4","dyla-1","dhc-3","pcrg-1","gpa-6","cog-1","ceh-14","srb-6","srh-74")
+
+# Non-ciliated neurons
+markers8 <- c("ceh-6","dop-1","flr-4","che-7")
+
+# Non-ciliated and ciliated neurons
+markers9 <- c("ttx-3","mgl-1","flp-2","ins-1","snet-1","aptf-1","odr-2","glr-2","flp-22","mbr-1","mls-2","mod-5","unc-86","inx-19","K07C5.9","ast-1","ceh-10","F17C11.2","flp-9","glc-3","bus-18","ser-2","nlp-15","eat-4","acc-2","flp-24","ceh-17","des-2","deg-3","snf-11","flp-13","lad-2","gcy-35","mec-17","mec-3","mec-7","unc-62","acc-1","fax-1","unc-42","unc-3","flp-18","acr-16","acr-15","rig-3","gpa-14","glr-1","nmr-2","ceh-31","pdf-1","unc-17","rig-5","glr-5","lite-1","lin-11","F59E11.7","hlh-34","ceh-6","flp-12","flp-1","sox-2","unc-25","unc-46","unc-47","lim-6","ceh-27","alr-1","pks-1","ace-3","acy-2","gbb-1","gbb-2","unc-4","mab-9","vab-7","unc-30","lin-44","nob-1","nlp-12","twk-16","ceh-63","hlh-14","hlh-13","egl-20","ceh-34","tbx-2","flp-4","unc-7","egl-5","nlp-7","glb-17","vab-15","ceh-43","nlp-17","C35B1.7","F26A10.1","Y43F8B.20","acr-23","irx-1","gpa-2","mec-1","zig-5","dop-5","unc-6","glr-3","glr-6","glr-4","ser-4","sto-3","unc-29","tbh-1","tdc-1","lim-4","unc-130","nhr-67","slt-1","rig-4","cex-1","flp-11","ceh-75","ceh-32","ceh-24","vab-8","ser-6","tmc-1","sox-3","glr-8")
+
+# Duct and pore
+markers10 <- c("irx-1","ceh-37","grl-2")
+
+# Rectal
+markers11 <- c("ceh-6","ref-2","mab-9","ceh-27","egl-38","egl-20","mom-2","pha-4","pal-1","nhr-25","daf-6","dve-1","nac-2","elt-3","tat-4")
