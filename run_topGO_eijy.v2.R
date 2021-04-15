@@ -152,6 +152,8 @@ files <- list.files(path=input_path, pattern = "\\.tsv$")
 #files
 for (file in files){
   
+  #file <- files[[1]]
+  
   # Initiate loop to all files in the directory
   
   # Create the pdf file
@@ -181,39 +183,33 @@ for (file in files){
   
   # Create topGO object
   GOterms = topGOterms(fg.genes = deg.list, bg.genes = bg.list, organism = 'Human')
-  GOterms
+  #GOterms
   
   # Plot Go terms p-values
   bp_plot <- GOterms$res.table
   bp_plot$pval <- as.numeric(as.character(bp_plot$pval))
-  bp_plot
+  #bp_plot
   #in case of NA values in pval
   bp_plot$pval[is.na(bp_plot$pval)] <- as.numeric(1e-30)
   
   # create the plot
-  pp <- ggplot(bp_plot, aes(x = Term, y = -log10(as.numeric(pval)))) +
-    geom_col() +
-    ylab("Enrichment") +
-    xlab("Biological process") +
-    ggtitle("GO term enrichment") +
-    scale_y_continuous(breaks = round(seq(0, max(-log10(as.numeric(bp_plot$pval))), by = 4), 1)) +
-    scale_x_discrete(limits=bp_plot$Term) +
-    theme_bw(base_size=11) +  #24
-    theme(
-      legend.position='none',
-      legend.background=element_rect(),
-      plot.title=element_text(angle=0, size=11, face="bold", vjust=1),   #24
-      axis.text.x=element_text(angle=0, size=9, face="bold", hjust=1.10),  # 18
-      axis.text.y=element_text(angle=0, size=9, face="bold", vjust=0.5),   # 18
-      axis.title=element_text(size=9, face="bold"),                       # 18
-      legend.key=element_blank(),     #removes the border
-      legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
-      legend.text=element_text(size=7),  #Text size
-      title=element_text(size=11)) +   # 18
-    guides(colour=guide_legend(override.aes=list(size=2.5))) +
-    coord_flip()
-  print(pp)  
   
+  pp <- ggplot(bp_plot, 
+          aes(x = Term, y = Significant, fill = -log10(as.numeric(pval)))) +
+          geom_col() +
+          ylab("Significant genes") +
+          xlab("Biological process") +
+          ggtitle("GO term enrichment") + 
+          scale_x_discrete(limits=rev(bp_plot$Term)) +
+          scale_fill_continuous(low = 'blue', high = 'red') +
+          theme_bw(base_size=11) +  #size of font
+      theme(
+          legend.position='bottom') +
+          labs(fill="-log10(P-val)") +
+      coord_flip() 
+  
+  print(pp)  
+  #pp
   
   dev.off()
   cat("Done.\n\n\n")
