@@ -111,7 +111,7 @@ topGOterms = function( fg.genes = NULL,
 #########################
 # Background gene list
 
-# remove iffalse if want to use whole gene annotation
+# remove iffalse if want to use whole gene annotation from biomaRt
 if (FALSE){
 # Downloading background gene list...it may take a while.
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
