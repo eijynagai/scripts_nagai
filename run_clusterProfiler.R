@@ -2,20 +2,23 @@
 
 
 # How to run
-# Rscript run_clusterProfiler_eijy.v1.R --i DEGs --o GOterms
-
+# Rscript run_topGO_eijy.v2.R --i DEGs --o GOterms
 
 # TODO
-
+# make better plot including p-value, number of significant
+# reverse the GO term values
+# 
 
 
 
 # Libraries
 suppressPackageStartupMessages(library("clusterProfiler"))
-library(org.Hs.eg.db)
+suppressPackageStartupMessages(library("org.Hs.eg.db"))
 suppressPackageStartupMessages(library("argparse"))
-#library(enrichplot)
-if(FALSE){
+suppressPackageStartupMessages(library("enrichplot"))
+
+
+
 # Create parse parameters
 parser <- ArgumentParser()
 parser$add_argument('--indir', type='character', default='./',
@@ -35,51 +38,101 @@ if (!file.exists(input_path)) {
   dir.create(file.path(output_path))
   cat(" done!\n")
 }
-}## end if
+
+# for testing
+if(FALSE){
+  setwd("Documents/_work/nakato_DEGs_GO_2021/")
+  input_path <- "DEGs"
+  output_path <- "GOterms"
+}
+
 
 
 # All DEGs list
-allDEGs <- read.csv(file = "AllDEGs.txt", header = FALSE)$V1
-head(allDEGs)
-length(allDEGs)
-class(allDEGs) #must be character
+allDEGs <- read.csv(file = paste(input_path,"AllDEGs.txt", sep = "/"), 
+                    header = FALSE)$V1
+#head(allDEGs)
+#length(allDEGs)
+#class(allDEGs) #must be character
 
-# Imput gene list
-setwd("Documents/_work/nakato_DEGs_GO_2021/")
-data <-read.csv(file = "DEGs/AllDEGs.1e-4.Zscore.cluster0.tsv", sep = "\t")
-head(data)
-deg.list <- data[,1]   #using symbol, set 2 for ensemblID
-#head(deg.list)
-#length(deg.list)
-#class(deg.list) #must be character
 
-ego <- enrichGO(gene          = deg.list,
+
+
+# Input gene list
+files <- list.files(path=input_path, pattern = "\\.tsv$")
+#file <- files[7]
+#file
+
+for (file in files){
+  # Initiate loop to all files in the directory
+  
+  # Create the pdf file
+  fname <- sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(file))
+  
+  # deleting previous outputfile
+  #Check its existence
+  if (file.exists(paste0(output_path, fname,"_clusterProfiler.pdf")))
+    #Delete file if it exists
+    file.remove(paste0(output_path, fname,"_clusterProfiler.pdf"))
+  
+  # Modify the size of page if necessary
+  #pdf(paste0(output_path, "/", fname,"_clusterProfiler.pdf"), width=10, height=7) # include the path with name
+  
+  cat("Preparing the file: ", fname)
+  cat("\n")
+  cat("It may take a while...\n")
+  
+  # Read in each file separated
+  data <-read.csv(file = paste(input_path, file, sep="/"), sep = "\t", header = TRUE) 
+  deg.list <- data[,1]  #using symbol, set 2 for ensemblID
+  
+  deg.list
+  
+  ego <- enrichGO(gene          = deg.list,
                 universe      = allDEGs,
                 OrgDb         = org.Hs.eg.db,
                 keyType       = 'SYMBOL',
                 ont           = "BP",
                 pAdjustMethod = "BH",
-                pvalueCutoff  = 0.01,
+                pvalueCutoff  = 0.05,
                 qvalueCutoff  = 0.05)
-#head(ego)
+  dim(ego)[1] == 0
+  #tail(ego)
+  #length(ego)
+  
+  # Test if no enrichment term
+  if (dim(ego)[1] == 0){
+    cat("O-oh! No enrichment for this cluster. Skipping...\n\n")
+    next
+  } 
+  
+  # Modify the size of page if necessary
+  pdf(paste0(output_path, "/", fname,"_clusterProfiler.pdf"), width=10, height=7) # include the path with name
+  
+  # Bar plot
+  p1 <- barplot(ego, 
+                title = "GO term enrichment by clusterProfiler",
+                showCategory=20)
+  print(p1)
+  p1
+  # Dot plot
+  #p2 <- dotplot(ego, showCategory=30) + ggtitle("dotplot")
+  #print(p2)
 
-# Bar plot
-barplot(ego, showCategory=20)
+  # Gene-concept Netword
+  #p3 <- cnetplot(ego, categorySize="pvalue", circular = TRUE, colorEdge = TRUE)
+  #print(p3)
 
-# Dot plot
-p1 <- dotplot(ego, showCategory=30) + ggtitle("dotplot")
-p1
+  # Heatmap-like functional classification
+  #p4 <- heatplot(ego)
+  #print(p4)
 
-# Gene-concept Netword
-p2 <- cnetplot(ego, categorySize="pvalue", circular = TRUE, colorEdge = TRUE)
-p2
+  # UpSet Plot
+  #p5 <- upsetplot(ego)
+  #print(p5)
 
-# Heatmap-like functional classification
-p3 <- heatplot(ego)
-p3
-
-# UpSet Plot
-p4 <- upsetplot(ego)
-p4
-
+  dev.off()
+  cat("Done.\n\n")
+  
+}
 

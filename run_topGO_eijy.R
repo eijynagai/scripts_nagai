@@ -1,8 +1,8 @@
-# Script to run GO analysis in tab delimited files
+# Script to run GO analysis in tab delimited files using topGO
 
 
 # How to run
-# Rscript run_topGO_eijy.R --indir DEGs --outdir GOterms
+# Rscript run_topGO_eijy.v2.R --i DEGs --o GOterms
 
 # TODO
 # make better plot including p-value, number of significant
@@ -13,7 +13,6 @@
 
 # Libraries
 suppressPackageStartupMessages(library("topGO"))
-suppressPackageStartupMessages(library("data.table"))
 suppressPackageStartupMessages(library("dplyr"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("biomaRt"))
@@ -31,6 +30,11 @@ args <- parser$parse_args()
 input_path <- args$indir
 output_path <- args$outdir
 
+if(FALSE){
+setwd("Documents/_work/nakato_DEGs_GO_2021/")
+input_path <- "DEGs"
+output_path <- "GOterms"
+}
 
 # Check if input and output exist.
 if (!file.exists(input_path)) {
@@ -40,6 +44,7 @@ if (!file.exists(input_path)) {
   dir.create(file.path(output_path))
   cat(" done!\n")
 }
+
 
 
 
@@ -106,9 +111,9 @@ topGOterms = function( fg.genes = NULL,
 #########################
 # Background gene list
 
+# remove iffalse if want to use whole gene annotation from biomaRt
+if (FALSE){
 # Downloading background gene list...it may take a while.
-
-#use ensembl mart
 ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 #create vector of chromosomes
@@ -121,7 +126,7 @@ all.genes = getBM(attributes = "hgnc_symbol",
                   mart = ensembl)
 
 # how many entries
-#dim(all.genes)
+dim(all.genes)
 
 # convert from dataframe to list
 bg.list <- as.list(as.data.frame(t(all.genes)))
@@ -129,13 +134,25 @@ bg.list <- as.list(as.data.frame(t(all.genes)))
 # check if there are duplicated entries
 cat("Is there any duplicated entry in background genes?\n")
 table(duplicated(bg.list))
+} #end of iffalse
 
+
+## Creating the universe genes list based on input files
+#system(paste0("Rscript run_create_background_gene_list.R --i ", input_path))
+
+
+# All DEGs list
+bg.list <- read.csv(file = paste(input_path,"AllDEGs.txt", sep = "/"), 
+                    header = FALSE)$V1
 
 
 #########################
 # Input gene list
 files <- list.files(path=input_path, pattern = "\\.tsv$")
+#files
 for (file in files){
+  
+  #file <- files[[1]]
   
   # Initiate loop to all files in the directory
   
@@ -145,62 +162,58 @@ for (file in files){
   
   # deleting previous outputfile
   #Check its existence
-  if (file.exists(paste0(output_path, fname,".pdf")))
+  if (file.exists(paste0(output_path, fname,"_topGO.pdf")))
   #Delete file if it exists
-    file.remove(paste0(output_path, fname,".pdf"))
+    file.remove(paste0(output_path, fname,"_topGO.pdf"))
   
   # Modify the size of page if necessary
-  pdf(paste0(output_path, "/", fname,".pdf"), width=7, height=4) # include the path with name
+  pdf(paste0(output_path, "/", fname,"_topGO.pdf"), width=7, height=4) # include the path with name
   
   cat("Preparing the file: ", fname)
-  cat("\n\n\n")
+  cat("\n\n")
   
   # Read in each file separated
-  data <-fread(file = paste(input_path, file, sep="/")) %>% as.data.frame()
-  #row.names(data) <- data$V1
-  deg.list <- data$V1
+  data <-read.csv(file = paste(input_path, file, sep="/"), sep = "\t", header = TRUE) 
+  deg.list <- data[,1]  #using symbol, set 2 for ensemblID
   
+  #deg.list
   
   #########################
   # GO analysis
   
   # Create topGO object
   GOterms = topGOterms(fg.genes = deg.list, bg.genes = bg.list, organism = 'Human')
-  GOterms
+  #GOterms
   
   # Plot Go terms p-values
   bp_plot <- GOterms$res.table
   bp_plot$pval <- as.numeric(as.character(bp_plot$pval))
-  bp_plot
+  #bp_plot
   #in case of NA values in pval
   bp_plot$pval[is.na(bp_plot$pval)] <- as.numeric(1e-30)
   
   # create the plot
-  pp <- ggplot(bp_plot, aes(x = Term, y = -log10(as.numeric(pval)))) +
-    geom_col() +
-    ylab("Enrichment") +
-    xlab("Biological process") +
-    ggtitle("GO term enrichment") +
-    scale_y_continuous(breaks = round(seq(0, max(-log10(as.numeric(bp_plot$pval))), by = 4), 1)) +
-    scale_x_discrete(limits=bp_plot$Term) +
-    theme_bw(base_size=11) +  #24
-    theme(
-      legend.position='none',
-      legend.background=element_rect(),
-      plot.title=element_text(angle=0, size=11, face="bold", vjust=1),   #24
-      axis.text.x=element_text(angle=0, size=9, face="bold", hjust=1.10),  # 18
-      axis.text.y=element_text(angle=0, size=9, face="bold", vjust=0.5),   # 18
-      axis.title=element_text(size=9, face="bold"),                       # 18
-      legend.key=element_blank(),     #removes the border
-      legend.key.size=unit(1, "cm"),      #Sets overall area/size of the legend
-      legend.text=element_text(size=7),  #Text size
-      title=element_text(size=11)) +   # 18
-    guides(colour=guide_legend(override.aes=list(size=2.5))) +
-    coord_flip()
-  print(pp)  
   
+  pp <- ggplot(bp_plot, 
+          aes(x = Term, y = Significant, fill = -log10(as.numeric(pval)))) +
+          geom_col() +
+          ylab("Significant genes") +
+          xlab("Biological process") +
+          ggtitle("GO term enrichment by topGO") + 
+          scale_x_discrete(limits=rev(bp_plot$Term)) +
+          scale_fill_continuous(low = 'blue', high = 'red') +
+          theme_bw(base_size=11) +  #size of font
+      theme(
+          legend.position='bottom') +
+          labs(fill="-log10(P-val)") +
+      coord_flip() 
+  
+  print(pp)  
+  #pp
   
   dev.off()
+  cat("Done.\n\n\n")
+
 }
 
 
