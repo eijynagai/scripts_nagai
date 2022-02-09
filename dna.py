@@ -7,8 +7,7 @@ Purpose: Tretranucleotide frequency
 
 import argparse
 import os
-from typing import NamedTuple
-
+from typing import NamedTuple, Tuple
 
 class Args(NamedTuple):
     """ Command-line arguments """
@@ -38,8 +37,32 @@ def get_args() -> Args:
 def main() -> None:
     """ Count nucleotide frequency """
     args = get_args()
-    print(args.dna)
 
+    count_a, count_c, count_g, count_t = count(args.dna)
+
+    #print('{} {} {} {}'.format(count_a, count_c, count_g, count_t))
+
+    print(f'{count_a} {count_c} {count_g} {count_t}')
+
+
+# --------------------------------------------------
+def count(dna: str) -> Tuple[int, int, int, int]:
+    """ Count bases in DNA """
+
+    #count_a, count_c, count_g, count_t = 0, 0, 0, 0
+    #for base in dna:
+    #    if base == 'A':
+    #        count_a += 1
+    #    elif base == 'C':
+    #        count_c += 1
+    #    elif base == 'G':
+    #        count_g += 1
+    #    elif base == 'T':
+    #        count_t += 1
+    #return(count_a, count_c, count_g, count_t)
+
+    # approach2
+    return (dna.count('A'), dna.count('C'), dna.count('G'), dna.count('T'))
 
 
 
