@@ -66,6 +66,18 @@ def count(dna: str) -> Tuple[int, int, int, int]:
 
 
 
+# --------------------------------------------------
+def test_count() -> None:
+    """ Test count """
+
+    assert count('') == (0, 0, 0, 0)
+    assert count('123XYZ') == (0, 0, 0, 0)
+    assert count('A') == (1, 0, 0, 0)
+    assert count('C') == (0, 1, 0, 0)
+    assert count('G') == (0, 0, 1, 0)
+    assert count('T') == (0, 0, 0, 1)
+    assert count('ACCGGGTTTT') == (1, 2, 3, 4)
+
 
 
 # --------------------------------------------------
