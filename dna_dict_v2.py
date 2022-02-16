@@ -7,7 +7,7 @@ Purpose: Tretranucleotide frequency
 
 import argparse
 import os
-from typing import NamedTuple, Tuple
+from typing import NamedTuple, Dict
 from collections import defaultdict
 
 class Args(NamedTuple):
