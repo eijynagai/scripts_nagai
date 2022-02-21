@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Author : eijy <eijy@localhost>
-Date   : 2022-02-15
+Date   : 2022-02-21
 Purpose: Tretranucleotide frequency
 """
 
@@ -39,7 +39,7 @@ def main() -> None:
     """ Count nucleotide frequency """
     args = get_args()
 
-    counts = Counter(args.dna)
+    counts = Counter(args.dna.upper())
 
     print(counts.get('A',0), 
           counts.get('C',0), 
@@ -59,7 +59,7 @@ def test_count() -> None:
     assert Counter('G') == {'G':1}
     assert Counter('T') == {'T':1}
     assert Counter('ACCGGGTTTT') == {'A':1, 'C':2, 'G':3, 'T':4}
-
+    #assert Counter('ACcGggTttt') == {'A':1, 'C':2, 'G':3, 'T':4} 
 
 
 # --------------------------------------------------
