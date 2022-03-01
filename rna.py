@@ -6,7 +6,8 @@ Purpose: Transcribe DNA to RNA
 """
 
 import argparse
-from typing import NamedTuple, TextIO
+import os
+from typing import NamedTuple, TextIO, List
 
 
 class Args(NamedTuple):
@@ -46,14 +47,16 @@ def main() -> None:
     """ Make a jazz noise here """
 
     args = get_args()
-    
+
     if not os.path.isdir(args.out_dir):
         os.makedirs(args.out_dir)
 
     num_files, num_seqs = 0, 0
     for fh in args.files:
     # open an output file in the output directory
-    
+        out_file = os.path.join(args.out_dir, os.path.basename(fh.name))
+        print(fh.name, '->', out_file)
+
     # for each line/sequence from the input file:
         # write the transcribed sequence to the output file
         # update the number of files processed
