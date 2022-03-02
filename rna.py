@@ -56,11 +56,17 @@ def main() -> None:
     # open an output file in the output directory
         out_file = os.path.join(args.out_dir, os.path.basename(fh.name))
         print(fh.name, '->', out_file)
+        out_fh = open(out_file, 'wt')
 
-    # for each line/sequence from the input file:
-        # write the transcribed sequence to the output file
-        # update the number of files processed
-    print('Done!')
+        # for each line/sequence from the input file:
+            # write the transcribed sequence to the output file
+            # update the number of files processed
+        for dna in fh:
+            out_fh.write(dna.rstrip().replace('T','U'))
+
+
+    
+    print('Done! Wrote')
 
 # --------------------------------------------------
 if __name__ == '__main__':
