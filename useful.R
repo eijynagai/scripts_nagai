@@ -12,3 +12,13 @@ str_c("path/to/dir", dir("path/do/dir"), sep = '/')
 # you can select a pattern and replace to another one
 # example: remove the extension from files
 str_replace(pattern = ".csv", replacement = "")
+
+
+# map() will apply in <some_data>, <some_command>
+# it is particular useful for list of lists or similar
+map(so, plot())
+
+
+# commandArgs() allows arguments to your Rscript
+#!/usr/bin/env Rscript
+args = commandArgs(trailingOnly=TRUE)
