@@ -19,3 +19,6 @@ str_replace(pattern = ".csv", replacement = "")
 map(so, plot())
 
 
+# commandArgs() allows arguments to your Rscript
+#!/usr/bin/env Rscript
+args = commandArgs(trailingOnly=TRUE)
