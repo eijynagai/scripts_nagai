@@ -1,5 +1,20 @@
 # List of useful packages and commands in R
 
+# Load libraries and install if not installed
+require2 <- function(x) { 
+  if (!base::require(x, character.only = TRUE)) {
+  install.packages(x, dep = TRUE) ; 
+  base::require(x, character.only = TRUE)
+  }
+  base::library(x, character.only = TRUE)
+}
+require2("Seurat")
+require2("tidyverse")
+require2("patchwork")
+require2("BiocManager")
+BiocManager::install("dittoSeq", update = FALSE)
+
+
 
 # str_c() concatenate strings
 # dir() returns the file/directories contained in a path, similar to ls command
